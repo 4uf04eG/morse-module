@@ -1,8 +1,9 @@
 #include <linux/module.h>
 #include <linux/proc_fs.h>
 #include <linux/kmod.h>
-#include <asm/uaccess.h>
 #include <linux/delay.h>
+#include <asm/uaccess.h>
+
 
 MODULE_AUTHOR("Ilya Kurin, 4uf04eg@gmail.com");
 MODULE_DESCRIPTION("Beeps message using Morse code");
@@ -152,17 +153,17 @@ static ssize_t handle_write(
     loff_t *ppos) {
     char procfs_buffer[1024];
 
-	if (raw_copy_from_user(procfs_buffer, ubuf, count))
-		return -EFAULT;
+    if (raw_copy_from_user(procfs_buffer, ubuf, count))
+	return -EFAULT;
 
     proceed_message(procfs_buffer, proceed_params(procfs_buffer));
 	
-	return count;
+    return count;
 }
  
 static struct file_operations operations = {
-	.owner = THIS_MODULE,
-	.write = handle_write,
+    .owner = THIS_MODULE,
+    .write = handle_write,
 };
 
 static int __init morse_init(void) {
