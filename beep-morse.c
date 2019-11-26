@@ -56,20 +56,25 @@ int main(int argc, char **argv) {
     char* message = (char*)malloc(1024 * sizeof(char));
 
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--dash") == 0)
+        if (strcmp(argv[i], "--dash") == 0) {
             play_dash_external();
-        else if (strcmp(argv[i], "--dot") == 0)
+            return 0;
+        } else if (strcmp(argv[i], "--dot") == 0) {
             play_dot_external();
-        else if (strcmp(argv[i], "--external") == 0)
-            external_status = 1;
-        else if (strcmp(argv[i], "--help") == 0)
+            return 0;
+        } else if (strcmp(argv[i], "--help") == 0) {
             print_help(0);
+            return 0;
+        } else if (strcmp(argv[i], "--external") == 0)
+            external_status = 1;
         else
             sprintf(message, "%s %s", message, argv[i]);
     }
 
-    if (message != NULL)
+    if (message != "")
         write_to_proc(external_status, message);
     else if (external_status == 1)
         print_help(-1);
+
+    return 0;
 }
