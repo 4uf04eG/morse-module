@@ -142,7 +142,6 @@ static int proceed_params(char* message) {
         return 11;
     }
 
-    type = INTERNAL;
     return 0;
 }
 
